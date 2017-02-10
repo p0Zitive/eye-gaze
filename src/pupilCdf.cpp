@@ -3,7 +3,6 @@
 
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/opencv.hpp>
-#include <opencv2/legacy/compat.hpp>
 
 void filter_image(cv::Mat roi_clr, cv::Point& pt_pupil) {
 

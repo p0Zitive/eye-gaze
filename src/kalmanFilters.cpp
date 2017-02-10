@@ -4,7 +4,6 @@
 
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/opencv.hpp>
-#include <opencv2/legacy/compat.hpp>
 
 #include "dlib/opencv.h"
 #include "dlib/image_processing/frontal_face_detector.h"
@@ -30,7 +29,7 @@ void init_kalman_point_p_l(cv::Point pt_pos_l) {
 	/*KF_p_l.transitionMatrix = *(cv::Mat_<float>(4,4) << 1,0,1,0,    0,1,0,1,0,     0,0,1,0,   0,0,0,1);
 	KF_p_l.processNoiseCov = *(cv::Mat_<float>(4,4) << 0.2,0,0.2,0,  0,0.2,0,0.2,  0,0,0.3,0,   
 		0,0,0,0.3);*/
-	KF_p_l.transitionMatrix = *(cv::Mat_<float>(6,6) << 1,0,1,0,0.5,0,    0,1,0,1,0,0.5,     0,0,1,0,1,0,   0,0,0,1,0,1,  0,0,0,0,1,0,  0,0,0,0,0,1);
+	KF_p_l.transitionMatrix = (cv::Mat_<float>(6,6) << 1,0,1,0,0.5,0,    0,1,0,1,0,0.5,     0,0,1,0,1,0,   0,0,0,1,0,1,  0,0,0,0,1,0,  0,0,0,0,0,1);
 	rng.fill(KF_p_l.processNoiseCov, cv::RNG::NORMAL, cv::Scalar(0), cv::Scalar(1));
 	/*KF_p_l.processNoiseCov = *(cv::Mat_<float>(6,6) << 0.2,0,0.2,0,  0,0.2,0,0.2,  0,0,0.3,0,   
 		0,0,0,0.3, 0.2,0,0.2,0,  0,0.2,0,0.2);*/
@@ -70,7 +69,7 @@ void init_kalman_point_p_r(cv::Point pt_pos_r) {
 	/*KF_p_r.transitionMatrix = *(cv::Mat_<float>(4,4) << 1,0,1,0,    0,1,0,1,0,     0,0,1,0,   0,0,0,1);
 	KF_p_r.processNoiseCov = *(cv::Mat_<float>(4,4) << 0.2,0,0.2,0,  0,0.2,0,0.2,  0,0,0.3,0,   
 		0,0,0,0.3);*/
-	KF_p_r.transitionMatrix = *(cv::Mat_<float>(6,6) << 1,0,1,0,0.5,0,    0,1,0,1,0,0.5,     0,0,1,0,1,0,   0,0,0,1,0,1,  0,0,0,0,1,0,  0,0,0,0,0,1);
+	KF_p_r.transitionMatrix = (cv::Mat_<float>(6,6) << 1,0,1,0,0.5,0,    0,1,0,1,0,0.5,     0,0,1,0,1,0,   0,0,0,1,0,1,  0,0,0,0,1,0,  0,0,0,0,0,1);
 	rng.fill(KF_p_r.processNoiseCov, cv::RNG::NORMAL, cv::Scalar(0), cv::Scalar(1));
 	/*KF_p_r.processNoiseCov = *(cv::Mat_<float>(6,6) << 0.2,0,0.2,0,  0,0.2,0,0.2,  0,0,0.3,0,   
 		0,0,0,0.3, 0.2,0,0.2,0,  0,0.2,0,0.2);*/
@@ -105,7 +104,7 @@ void init_kalman_point_e_l(cv::Point pt_pos_l) {
 	KF_e_l.statePre.at<float>(2) = 0;
 	KF_e_l.statePre.at<float>(3) = 0;
 
-	KF_e_l.transitionMatrix = *(cv::Mat_<float>(4,4) << 1,0,1,0,    0,1,0,1,0,     0,0,1,0,   0,0,0,1);
+	KF_e_l.transitionMatrix = (cv::Mat_<float>(4,4) << 1,0,1,0,    0,1,0,1,0,     0,0,1,0,   0,0,0,1);
 	/*KF_e_l.processNoiseCov = *(cv::Mat_<float>(4,4) << 0.2,0,0.2,0,  0,0.2,0,0.2,  0,0,0.3,0,   
 		0,0,0,0.3);*/
 	rng.fill(KF_e_l.processNoiseCov, cv::RNG::NORMAL, cv::Scalar(0), cv::Scalar(1));
@@ -137,7 +136,7 @@ void init_kalman_point_e_r(cv::Point pt_pos_r) {
 	KF_e_r.statePre.at<float>(2) = 0;
 	KF_e_r.statePre.at<float>(3) = 0;
 
-	KF_e_r.transitionMatrix = *(cv::Mat_<float>(4,4) << 1,0,1,0,    0,1,0,1,0,     0,0,1,0,   0,0,0,1);
+	KF_e_r.transitionMatrix = (cv::Mat_<float>(4,4) << 1,0,1,0,    0,1,0,1,0,     0,0,1,0,   0,0,0,1);
 	/*KF_e_r.processNoiseCov = *(cv::Mat_<float>(4,4) << 0.2,0,0.2,0,  0,0.2,0,0.2,  0,0,0.3,0,   
 		0,0,0,0.3);*/
 	rng.fill(KF_e_r.processNoiseCov, cv::RNG::NORMAL, cv::Scalar(0), cv::Scalar(1));
@@ -173,7 +172,7 @@ void init_kalman_ce_l(std::vector<double> vec) {
 	KF_ce_l.statePre.at<float>(5) = 0;
 
 
-	KF_ce_l.transitionMatrix = *(cv::Mat_<float>(6, 6) << 1,0,0,1,0,0, 0,1,0,0,1,0, 0,0,1,0,0,1, 0,0,0,1,0,0, 0,0,0,0,1,0, 0,0,0,0,0,1);
+	KF_ce_l.transitionMatrix = (cv::Mat_<float>(6, 6) << 1,0,0,1,0,0, 0,1,0,0,1,0, 0,0,1,0,0,1, 0,0,0,1,0,0, 0,0,0,0,1,0, 0,0,0,0,0,1);
 	/*KF_ce_l.processNoiseCov = *(cv::Mat_<float>(6,6) << 0.2,0,0.2,0,  0,0.2,0,0.2,  0,0,0.3,0,   
 		0,0,0,0.3, 0.2,0,0.2,0,  0,0.2,0,0.2);*/
 	rng.fill(KF_ce_l.processNoiseCov, cv::RNG::NORMAL, cv::Scalar(0), cv::Scalar(1));
@@ -212,7 +211,7 @@ void init_kalman_ce_r(std::vector<double> vec) {
 	KF_ce_r.statePre.at<float>(5) = 0;
 
 
-	KF_ce_r.transitionMatrix = *(cv::Mat_<float>(6, 6) << 1,0,0,1,0,0, 0,1,0,0,1,0, 0,0,1,0,0,1, 0,0,0,1,0,0, 0,0,0,0,1,0, 0,0,0,0,0,1);
+	KF_ce_r.transitionMatrix = (cv::Mat_<float>(6, 6) << 1,0,0,1,0,0, 0,1,0,0,1,0, 0,0,1,0,0,1, 0,0,0,1,0,0, 0,0,0,0,1,0, 0,0,0,0,0,1);
 	/*KF_ce_r.processNoiseCov = *(cv::Mat_<float>(6,6) << 0.2,0,0.2,0,  0,0.2,0,0.2,  0,0,0.3,0,   
 		0,0,0,0.3, 0.2,0,0.2,0,  0,0.2,0,0.2);*/
 	rng.fill(KF_ce_r.processNoiseCov, cv::RNG::NORMAL, cv::Scalar(0), cv::Scalar(1));
@@ -251,7 +250,7 @@ void init_kalman_ep_l(std::vector<double> vec) {
 	KF_ep_l.statePre.at<float>(5) = 0;
 
 
-	KF_ep_l.transitionMatrix = *(cv::Mat_<float>(6, 6) << 1,0,0,1,0,0, 0,1,0,0,1,0, 0,0,1,0,0,1, 0,0,0,1,0,0, 0,0,0,0,1,0, 0,0,0,0,0,1);
+	KF_ep_l.transitionMatrix = (cv::Mat_<float>(6, 6) << 1,0,0,1,0,0, 0,1,0,0,1,0, 0,0,1,0,0,1, 0,0,0,1,0,0, 0,0,0,0,1,0, 0,0,0,0,0,1);
 	/*KF_ep_l.processNoiseCov = *(cv::Mat_<float>(6,6) << 0.2,0,0.2,0,  0,0.2,0,0.2,  0,0,0.3,0,   
 		0,0,0,0.3, 0.2,0,0.2,0,  0,0.2,0,0.2);*/
 	rng.fill(KF_ep_l.processNoiseCov, cv::RNG::NORMAL, cv::Scalar(0), cv::Scalar(1));
@@ -290,7 +289,7 @@ void init_kalman_ep_r(std::vector<double> vec) {
 	KF_ep_r.statePre.at<float>(5) = 0;
 
 
-	KF_ep_r.transitionMatrix = *(cv::Mat_<float>(6, 6) << 1,0,0,1,0,0, 0,1,0,0,1,0, 0,0,1,0,0,1, 0,0,0,1,0,0, 0,0,0,0,1,0, 0,0,0,0,0,1);
+	KF_ep_r.transitionMatrix = (cv::Mat_<float>(6, 6) << 1,0,0,1,0,0, 0,1,0,0,1,0, 0,0,1,0,0,1, 0,0,0,1,0,0, 0,0,0,0,1,0, 0,0,0,0,0,1);
 	/*KF_ep_r.processNoiseCov = *(cv::Mat_<float>(6,6) << 0.2,0,0.2,0,  0,0.2,0,0.2,  0,0,0.3,0,   
 		0,0,0,0.3, 0.2,0,0.2,0,  0,0.2,0,0.2);*/
 	rng.fill(KF_ep_r.processNoiseCov, cv::RNG::NORMAL, cv::Scalar(0), cv::Scalar(1));
@@ -329,7 +328,7 @@ void init_kalman_cp_l(std::vector<double> vec) {
 	KF_cp_l.statePre.at<float>(5) = 0;
 
 
-	KF_cp_l.transitionMatrix = *(cv::Mat_<float>(6, 6) << 1,0,0,1,0,0, 0,1,0,0,1,0, 0,0,1,0,0,1, 0,0,0,1,0,0, 0,0,0,0,1,0, 0,0,0,0,0,1);
+	KF_cp_l.transitionMatrix = (cv::Mat_<float>(6, 6) << 1,0,0,1,0,0, 0,1,0,0,1,0, 0,0,1,0,0,1, 0,0,0,1,0,0, 0,0,0,0,1,0, 0,0,0,0,0,1);
 	/*KF_cp_l.processNoiseCov = *(cv::Mat_<float>(6,6) << 0.2,0,0.2,0,  0,0.2,0,0.2,  0,0,0.3,0,   
 		0,0,0,0.3, 0.2,0,0.2,0,  0,0.2,0,0.2);*/
 	rng.fill(KF_cp_l.processNoiseCov, cv::RNG::NORMAL, cv::Scalar(0), cv::Scalar(1));
@@ -368,7 +367,7 @@ void init_kalman_cp_r(std::vector<double> vec) {
 	KF_cp_r.statePre.at<float>(5) = 0;
 
 
-	KF_cp_r.transitionMatrix = *(cv::Mat_<float>(6, 6) << 1,0,0,1,0,0, 0,1,0,0,1,0, 0,0,1,0,0,1, 0,0,0,1,0,0, 0,0,0,0,1,0, 0,0,0,0,0,1);
+	KF_cp_r.transitionMatrix = (cv::Mat_<float>(6, 6) << 1,0,0,1,0,0, 0,1,0,0,1,0, 0,0,1,0,0,1, 0,0,0,1,0,0, 0,0,0,0,1,0, 0,0,0,0,0,1);
 	/*KF_cp_r.processNoiseCov = *(cv::Mat_<float>(6,6) << 0.2,0,0.2,0,  0,0.2,0,0.2,  0,0,0.3,0,   
 		0,0,0,0.3, 0.2,0,0.2,0,  0,0.2,0,0.2);*/
 	rng.fill(KF_cp_r.processNoiseCov, cv::RNG::NORMAL, cv::Scalar(0), cv::Scalar(1));

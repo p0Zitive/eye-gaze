@@ -1,6 +1,12 @@
 # eye-gaze
 ## Repositiory for Eye Gaze Detection and Tracking
 
+* For mac-users (fixed most often compiling errors on any mac-configurations):
+```
+xcode-select --install
+brew install pkg-config cairo libpng jpeg giflib
+```
+
 We have implemented an Eye Gaze tracking system ( currently in Beta version ) using a series of algorithms. It computes the following :
 
 * Pupil detection
@@ -16,6 +22,7 @@ $ cd eye-gaze
 $ git checkout tags/v1.0
 $ make
 ```
+
 Or you can download **eye-gaze v1.0** directly from releases.
 
 For a trial,
